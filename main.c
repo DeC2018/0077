@@ -23,25 +23,23 @@ void create(int num, int n, int *ans) {
 }
 
 int** combine(int n, int k, int* returnSize, int** returnColumnSizes) {
-    int i, count = 0, total = C(n, k);
+    int i, total = C(n, k), count = 0;
     int **ans = (int**)malloc(total * sizeof(int*));
     int *col = (int*)malloc(total * sizeof(int));
-    
     for (i = 0; i < total; i++) {
         ans[i] = (int*)calloc(k, sizeof(int));
         col[i] = k;
     }
-    
     *returnColumnSizes = col;
     *returnSize = total;
-    
+
     for (i = 1; i < (1 << n); i++) {
         if (__builtin_popcount(i) == k) {
             create(i, n, ans[count]);
             count++;
         }
     }
-    
+
     return ans;
 }
 
@@ -64,28 +62,33 @@ void printCombinations(int** combinations, int returnSize, int* returnColumnSize
 }
 
 int main() {
-    int n = 4, k = 2;
-    int returnSize;
-    int* returnColumnSizes;
-    
-    int** result = combine(n, k, &returnSize, &returnColumnSizes);
-    printf("Input: n = %d, k = %d\n", n, k);
+    int n1 = 4, k1 = 2;
+    int returnSize1;
+    int* returnColumnSizes1;
+    printf("Input: n = %d, k = %d\n", n1, k1);
+    int** result1 = combine(n1, k1, &returnSize1, &returnColumnSizes1);
     printf("Output: ");
-    printCombinations(result, returnSize, returnColumnSizes);
-    
-    // Example for n = 1, k = 1
-    n = 1; k = 1;
-    result = combine(n, k, &returnSize, &returnColumnSizes);
-    printf("Input: n = %d, k = %d\n", n, k);
-    printf("Output: ");
-    printCombinations(result, returnSize, returnColumnSizes);
-    
-    // Free allocated memory
-    for (int i = 0; i < returnSize; i++) {
-        free(result[i]);
+    printCombinations(result1, returnSize1, returnColumnSizes1);
+
+    for (int i = 0; i < returnSize1; i++) {
+        free(result1[i]);
     }
-    free(result);
-    free(returnColumnSizes);
-    
+    free(result1);
+    free(returnColumnSizes1);
+
+    int n2 = 1, k2 = 1;
+    int returnSize2;
+    int* returnColumnSizes2;
+    printf("Input: n = %d, k = %d\n", n2, k2);
+    int** result2 = combine(n2, k2, &returnSize2, &returnColumnSizes2);
+    printf("Output: ");
+    printCombinations(result2, returnSize2, returnColumnSizes2);
+
+    for (int i = 0; i < returnSize2; i++) {
+        free(result2[i]);
+    }
+    free(result2);
+    free(returnColumnSizes2);
+
     return 0;
 }
